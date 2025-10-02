@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Life Partner ❤️</title>
+<style>
+/* ---------- Global ---------- */
+body, html {
+  margin: 0; padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #000; color: #fff; text-align: center;
+  overflow: hidden; height: 100vh;
+}
+
+/* ---------- Splash ---------- */
+#splash { 
+  display: flex; flex-direction: column; justify-content: center; align-items: center; 
+  width: 100%; height: 100vh; position: relative;
+}
+#splash h1 { font-size: 3rem; animation: neon 1.5s infinite alternate; z-index:2; position:relative; }
+@keyframes neon { 
+  0% { text-shadow:0 0 5px #ff0080,0 0 10px #ff0080;} 
+  100% { text-shadow:0 0 20px #00ffff,0 0 40px #00ffff; } 
+}
+#openBtn { margin-top:20px; padding:12px 30px; font-size:1rem; color:#fff; background:#ff0077; border:none; border-radius:30px; cursor:pointer; transition:0.3s; z-index:2; position:relative;}
+#openBtn:hover { transform: scale(1.1); background:#ff3399; }
+
+/* ---------- Confetti / Hearts / Balloons ---------- */
+#confetti { position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden; z-index:1; }
+.balloon, .heart {
+  animation: riseUp linear infinite;
+  position: absolute;
+  z-index: 10;
+}
+.balloon { font-size: 60px; }
+.heart { font-size: 40px; }
+@keyframes riseUp {
+  0% { transform: translateY(100vh) rotate(0deg); opacity:1; }
+  100% { transform: translateY(-200px) rotate(360deg); opacity:0; }
+}
+
+/* ---------- Cake Page ---------- */
+#main {
+  display:none;
+  width:100%; height:100vh;
+  background:radial-gradient(circle at top,#ffdde1,#ee9ca7);
+  display: flex; flex-direction: column; justify-content: center; align-items: center;     
+  text-align: center; overflow: hidden;
+}
+.cake-emoji { font-size: 10rem; margin-bottom: 20px; }
+h2 { margin-top:20px; color:#d6336c; font-size:2rem; text-shadow:0 0 5px #fff,0 0 10px #ff0077;}
+#cardBtn { margin-top:20px; padding:12px 30px; font-size:1rem; color:#fff; background:#0077ff; border:none; border-radius:30px; cursor:pointer; transition:0.3s; }
+#cardBtn:hover { transform:scale(1.1); background:#3399ff; }
+
+/* ---------- Gift Card Page ---------- */
+#card { display:none; width:100%; height:100vh; background:#fddde4; display:flex; justify-content:center; align-items:center; padding:20px; position:relative; overflow:hidden;}
+.card-container { position:relative; width:90%; max-width:600px; background:#fff0f5; border:2px dashed #c33; border-radius:40px; padding:30px 20px; text-align:center; box-shadow:0 10px 20px rgba(0,0,0,0.1); overflow-y:auto; max-height:90vh;}
+.card-container h1 { font-family:'Brush Script MT',cursive; font-size:2rem; color:#b22222; font-weight:bold; margin-bottom:20px; text-align:center; animation:neon 1.5s infinite alternate; }
+.card-container p { font-family:'Segoe UI',sans-serif; font-size:1.1rem; line-height:1.7; color:#800000; text-align:left; white-space:pre-line; }
+
+/* Hearts in corners */
+.corner-heart { position:absolute; font-size:2.5rem; }
+.top-left{top:-10px;left:-10px;}
+.top-right{top:-10px;right:-10px;}
+.bottom-left{bottom:-10px;left:-10px;}
+.bottom-right{bottom:-10px;right:-10px;}
+
+/* Something For You button */
+#giftBtn { margin-top:20px; padding:12px 20px; background:#ff33aa; color:#fff; border:none; border-radius:25px; cursor:pointer; font-weight:bold; transition:0.3s; }
+#giftBtn:hover { background:#ff66cc; transform:scale(1.05); }
+
+/* ---------- Modals ---------- */
+#albumModal, #gifModal, #anotherGift, #bigImageModal, #videoModal, #namePopup {
+  display:none; position:fixed; top:0; left:0; width:100%; height:100vh; 
+  background: rgba(0,0,0,0.95); justify-content:center; align-items:center; flex-direction:column; z-index:1000;
+}
+#albumModal img, #bigImageModal img { max-width:80%; max-height:80%; border-radius:20px; box-shadow:0 10px 30px rgba(255,0,150,0.5); opacity:1; transition:opacity 1s; cursor:pointer; }
+#albumModal img.active { opacity:1; }
+#albumCaption { color:#fff; font-size:1.2rem; margin-top:15px;}
+
+
+#nextPageBtn, #oneMoreBtn, #oneMoreFromGiftBtn, #justSeeBtn { margin-top:20px; padding:10px 25px; background:#ff3399; color:#fff; border:none; border-radius:20px; cursor:pointer; transition:0.3s; display:none;}
+#nextPageBtn:hover, #oneMoreBtn:hover, #oneMoreFromGiftBtn:hover, #justSeeBtn:hover { transform:scale(1.05); background:#ff66cc; }
+
+/* GIF Modal message */
+#blinkingMessage { margin-top:30px; padding:20px 30px; border:2px dashed #fff; font-size:1.5rem; animation:blink 1s infinite; }
+@keyframes blink {0%,50%,100%{opacity:1;}25%,75%{opacity:0;}}
+
+/* Hearts in Big Image Modal */
+#bigImageModal .heart { position:absolute; font-size:3rem; animation:riseUp 10s linear infinite; }
+#videoModal video { 
+  max-width:50%;   /* reduce width (try 40–60%) */
+  max-height:50%;  /* optional, keeps video from being too tall */
+  border-radius:20px; 
+  box-shadow:0 10px 30px rgba(255,0,150,0.5); 
+}
+
+
+#anotherGift h1 { font-family:'Brush Script MT',cursive; font-size:2.2rem; color:#b22222; margin-bottom:20px; }
+#anotherGift p { font-size:1.2rem; line-height:1.6; }
+#bigImageModal p { color:#fff; font-size:1.5rem; margin-top:20px; }
+
+/* ---------- Name Popup ---------- */
+#namePopup .popup-content { background:#fff; padding:30px 20px; border-radius:20px; text-align:center; max-width:400px; width:90%; color:#000; }
+#namePopup input { padding:10px 15px; width:80%; font-size:1rem; border-radius:10px; border:1px solid #ccc; margin-top:10px; }
+#namePopup button { margin-top:15px; padding:10px 20px; border:none; border-radius:15px; background:#ff33aa; color:#fff; cursor:pointer; font-weight:bold; }
+#namePopup #errorMsg { color:red; margin-top:10px; display:none; }
+
+#loveLetterModal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100vh;
+  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  overflow: hidden;
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#loveLetterModal .letter-box {
+  width: 80%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  font-size: 1.3rem;
+  line-height: 1.8;
+  border: 2px solid rgba(255,255,255,0.3);
+  z-index: 10;
+  position: relative;
+  color: #000;
+}
+
+.typing {
+  white-space: pre-line;
+  overflow: hidden;
+  border-right: 3px solid #fff;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink { 50% { border-color: transparent; } }
+
+.signature {
+  margin-top: 20px;
+  text-align: right;
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: none;
+  color: #ff4f81;
+}
+
+
+#supersizePage {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+  color: #fff;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100vh;
+  z-index: 2000;
+  text-align: center;
+}
+
+#supersizePage img#mainImage {
+  width: 80%;
+  max-width: 400px;
+  margin: 20px auto;
+  border-radius: 15px;
+}
+
+#supersizePage .btn {
+  padding: 12px 25px;
+  margin: 20px;
+  background: #ff3399;
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#supersizePage .btn:hover {
+  transform: scale(1.05);
+  background: #ff66cc;
+}
+
+#supersizePage .hidden {
+  display: none;
+}
+
+#supersizePage #girlImage {
+  width: 80%;
+  max-width: 400px;
+  margin: 20px auto;
+  border-radius: 15px;
+  display: none;
+}
+
+#supersizePage #finalMessage {
+  font-size: 2rem;
+  margin-top: 20px;
+  color: #ff4f81;
+  display: none;
+}
+
+#supersizePage #sadMessage {
+  font-size: 2rem;
+  margin-top: 20px;
+  color: #ff4f81;
+  display: none;
+  animation: pop 0.5s ease-in-out;
+}
+
+@keyframes pop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+</style>
+</head>
+<body>
+
+<div id="confetti"></div>
+
+<!-- Splash -->
+<div id="splash">
+  <h1>🎉 Happy Birthday Life Partner  ❤️ 👸</h1>
+  <h2>Wishing you a day filled with love and joy! 🎉🎂</h2>
+  <button id="openBtn">OPEN</button>
+</div>
+
+<!-- Cake -->
+<div id="main">
+  <div class="cake">
+    <div class="cake-emoji">🎂</div>
+  </div>
+  <h2>🎂 Happy Birthday My Life Partner 🎂 </h2>
+  <button id="cardBtn">💌 Open Gift Card</button>
+  <audio id="song" autoplay loop>
+    <source src="music/ong.mp3" type="audio/mpeg" />
+  </audio>
+</div>
+
+<!-- Name Popup -->
+<div id="namePopup">
+  <div class="popup-content">
+    <h2>Enter Your Name 💌</h2>
+    <input id="nameInput" type="text" placeholder="Type your name">
+    <div id="errorMsg">Only Jyoti can open this gift 💖!</div>
+    <button id="submitNameBtn">Submit</button>
+  </div>
+</div>
+
+
+<!-- Gift Card -->
+<div id="card">
+  <div class="card-container">
+    <span class="corner-heart top-left">💕</span>
+    <span class="corner-heart top-right">❤️</span>
+    <span class="corner-heart bottom-left">❤️</span>
+    <span class="corner-heart bottom-right">💕</span>
+
+    <h1>To My Life Partner ❤️</h1>
+    <p>💌Happy Birthday, my love❤️ ! Today, I celebrate not just your special day but the incredible person you are and the happiness you bring into my life. Every moment with you feels like a dream, and every memory we create together is a treasure I will cherish forever. Your smile lights up my darkest days, your laughter is my favorite melody, and your love completes me in ways I never imagined. You are my confidant, my safe haven, and the love of my life. Through every joy and challenge, I promise to stand by you, support you, and love you endlessly. Accept my love, my life partner, and know that my heart belongs to you today, tomorrow, and always.love❤️</p>
+    <div style="font-size:2.5rem; color:#b22222; margin-top:25px;">❤️</div>
+    <button id="giftBtn">🎁 Something For You</button>
+  </div>
+</div>
+
+<!-- Album Modal -->
+<div id="albumModal">
+  <img id="albumImage" src="" alt="">
+  <div id="albumCaption"></div>
+  <button id="nextPageBtn">Next Surprise 🎉</button>
+</div>
+
+<!-- GIF Modal -->
+<div id="gifModal">
+  <div style="width:150px;height:150px;border-radius:50%;display:flex;justify-content:center;align-items:center;overflow:hidden;">
+    <div class="tenor-gif-embed" data-postid="12443229635970237657" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+      <a href="https://tenor.com/view/mocha-and-milk-madebychie-gif-12443229635970237657">Mocha And Milk</a>
+    </div>
+  </div>
+  <div id="blinkingMessage">💖 Happy Birthday My Love 💖</div>
+  <button id="oneMoreBtn">One More 🎁</button>
+</div>
+
+<!-- Another Gift Modal -->
+<div id="anotherGift">
+  <h1>To My Life Partner ❤️</h1>
+  <p>May our love always grow stronger, happiest birthday to you, my jaan 😘💖</p>
+  <button id="oneMoreFromGiftBtn">🎁 One More</button>
+</div>
+
+<!-- Big Image Modal -->
+<div id="bigImageModal">
+  <div class="heart top-left">💖</div>
+  <div class="heart top-right">💘</div>
+  <div class="heart bottom-left">💞</div>
+  <div class="heart bottom-right">💝</div>
+
+  <img src="images/img8.jpeg" alt="Big Birthday Image">
+  <p>Every time I see you, I just pray</p>
+  <p>Bhagawan Ise Mujhse Door Mat Hone Dena. ❤️</p>
+  <button id="justSeeBtn">🎬 Just See</button>
+</div>
+
+
+<!-- Video Modal -->
+<div id="videoModal">
+  <video id="birthdayVideo" autoplay muted>
+    <source src="videos/birthday_status.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <button id="openLetterBtn" style="margin-top:20px;padding:10px 20px;border:none;border-radius:20px;background:#ff3399;color:#fff;font-weight:bold;cursor:pointer;">
+    💌 Open Love Letter
+  </button>
+</div>
+
+<!-- Love Letter Modal -->
+<div id="loveLetterModal">
+  <!-- Transparent floating hearts -->
+  <div class="heart" style="left:10%; animation-duration:12s;">💕</div>
+  <div class="heart" style="left:25%; animation-duration:15s; font-size:2.5rem;">💗</div>
+  <div class="heart" style="left:40%; animation-duration:10s;">💕</div>
+  <div class="heart" style="left:60%; animation-duration:18s; font-size:3rem;">💖</div>
+  <div class="heart" style="left:80%; animation-duration:14s;">💕</div>
+  <div class="heart" style="left:70%; animation-duration:20s; font-size:2rem;">💗</div>
+
+  <!-- Love Letter Box -->
+  <div class="letter-box">
+    <p id="letter" class="typing"></p>
+    <p class="signature" id="signature">❤️ Yours, Abhijit</p>
+
+    <!-- Supersize Button -->
+    <button id="supersizeBtn" style="margin-top:20px;padding:12px 25px;border:none;border-radius:20px;background:#ff3399;color:#fff;font-weight:bold;cursor:pointer;">
+      Click here for Supersize
+    </button>
+  </div>
+</div>
+<!-- Supersize / Girl Reveal Modal -->
+<div id="supersizePage">
+  <!-- Smaller initial image -->
+  <img id="mainImage" src="images/special.jpeg" alt="Boy walking with imaginary girl" style="width:60%; max-width:300px; margin:20px auto; border-radius:15px;">
+
+  <button id="knowBtn" class="btn">Do you know who the girl is?</button>
+
+  <div id="confirmDiv" class="hidden">
+    <p>Do you really want to know?</p>
+    <button id="yesBtn" class="btn">Yes</button>
+    <button id="noBtn" class="btn">No</button>
+  </div>
+
+  <div id="sadMessage" class="hidden">🥺 Enter Yes, my life partner ❤️</div>
+
+  <!-- Girl image hidden initially -->
+  <img id="girlImage" src="images/img13.jpeg" alt="It's you!" class="hidden" style="width:60%; max-width:300px; margin:20px auto; border-radius:15px;">
+  <div id="finalMessage" class="hidden">It's you ❤️</div>
+  <button id="onceMoreBtn">Once More</button>
+</div>
+
+<script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+<script>
+window.onload = function() {
+  const splash = document.getElementById("splash");
+  const main = document.getElementById("main");
+  const card = document.getElementById("card");
+  const song = document.getElementById("song");
+  const confettiContainer = document.getElementById("confetti");
+
+  // Name popup elements
+  const namePopup = document.getElementById("namePopup");
+  const nameInput = document.getElementById("nameInput");
+  const submitBtn = document.getElementById("submitName");
+  const errorMsg = document.getElementById("errorMsg");
+
+  // Open splash → cake page
+  document.getElementById("openBtn").addEventListener("click", () => {
+    splash.style.display = "none";
+    main.style.display = "flex";
+    card.style.display = "none";
+    namePopup.style.display = "none";
+    confettiContainer.innerHTML = "";
+    document.body.style.overflow = "hidden";
+    song.play();
+  });
+
+// Open name popup from Cake page
+document.getElementById("cardBtn").addEventListener("click", () => {
+  namePopup.style.display = "flex";
+  errorMsg.style.display = "none";
+  nameInput.value = "";
+});
+
+// Check name → open gift card
+document.getElementById("submitNameBtn").addEventListener("click", () => {
+  const name = nameInput.value.trim().toLowerCase();
+  if(name === "jyoti"){
+    namePopup.style.display = "none";
+    main.style.display = "none"; // HIDE Cake page
+    card.style.display = "flex"; // SHOW Gift Card page
+  } else {
+    errorMsg.style.display = "block";
+  }
+});
+
+
+  // Gift card → Album
+  const giftBtn = document.getElementById("giftBtn");
+  const albumModal = document.getElementById("albumModal");
+  const albumImage = document.getElementById("albumImage");
+  const albumCaption = document.getElementById("albumCaption");
+  const nextPageBtn = document.getElementById("nextPageBtn");
+
+  const albumImages = [
+    {src:"images/img1.jpeg", msg:"You are my sunshine 💖"}, 
+    {src:"images/img2.jpeg", msg:"Always together ❤️"}, 
+    // {src:"images/img3.jpeg", msg:"My sweetest moments 🌹"}, 
+    // {src:"images/img4.jpeg", msg:"Love you forever 💌"}, 
+    // {src:"images/img5.jpeg", msg:"You complete me 😘"}, 
+    // {src:"images/img6.jpeg", msg:"Happiest memories 🎶"}, 
+    // {src:"images/img7.jpeg", msg:"Joy & laughter 🌸"}, 
+    // {src:"images/img8.jpeg", msg:"Heart to heart 💗"},
+    // {src:"images/img9.jpeg", msg:"Together forever 💑"},
+    // {src:"images/img10.jpeg", msg:"You make me smile 😊"},
+    // {src:"images/img11.jpeg", msg:"Every moment is precious 💕"},
+    // {src:"images/img12.jpeg", msg:"My life, my love 🌹"},
+    // {src:"images/img13.jpeg", msg:"You are my sunshine 💖"}, 
+    // {src:"images/img14.jpeg", msg:"Always together ❤️"}, 
+    // {src:"images/img15.jpeg", msg:"My sweetest moments 🌹"}, 
+    // {src:"images/img16.jpeg", msg:"Love you forever 💌"}, 
+    // {src:"images/img17.jpeg", msg:"You complete me 😘"}, 
+    // {src:"images/img18.jpeg", msg:"Happiest memories 🎶"}, 
+    // {src:"images/img19.jpeg", msg:"Joy & laughter 🌸"}, 
+    // {src:"images/img20.jpeg", msg:"Heart to heart 💗"}
+  ];
+
+  let currentIndex = 0;
+  function showAlbumImage() {
+    if(currentIndex >= albumImages.length){
+      nextPageBtn.style.display = "block"; 
+      return;
+    }
+    const item = albumImages[currentIndex];
+    albumImage.src = item.src;
+    albumCaption.textContent = item.msg;
+    albumImage.classList.add("active");
+    setTimeout(() => {
+      albumImage.classList.remove("active");
+      currentIndex++;
+      showAlbumImage();
+    }, 2000);
+  }
+
+  giftBtn.addEventListener("click", () => {
+    albumModal.style.display = "flex";
+    currentIndex = 0;
+    nextPageBtn.style.display = "none";
+    showAlbumImage();
+  });
+
+  // Album → GIF
+  const gifModal = document.getElementById("gifModal");
+  const oneMoreBtn = document.getElementById("oneMoreBtn");
+  const anotherGift = document.getElementById("anotherGift");
+  const oneMoreFromGiftBtn = document.getElementById("oneMoreFromGiftBtn");
+  const bigImageModal = document.getElementById("bigImageModal");
+  const justSeeBtn = document.getElementById("justSeeBtn");
+  const videoModal = document.getElementById("videoModal");
+  const birthdayVideo = document.getElementById("birthdayVideo");
+
+  nextPageBtn.addEventListener("click", () => {
+    albumModal.style.display = "none";
+    gifModal.style.display = "flex";
+    oneMoreBtn.style.display = "block"; 
+  });
+
+  // GIF → Another Gift
+  oneMoreBtn.addEventListener("click", () => {
+    gifModal.style.display = "none";
+    anotherGift.style.display = "flex";
+    oneMoreFromGiftBtn.style.display = "block"; 
+  });
+
+  // Another Gift → Big Image
+  oneMoreFromGiftBtn.addEventListener("click", () => {
+    anotherGift.style.display = "none";
+    bigImageModal.style.display = "flex";
+    justSeeBtn.style.display = "block";
+  });
+
+  // Big Image → Video
+  justSeeBtn.addEventListener("click", () => {
+    bigImageModal.style.display = "none";
+    videoModal.style.display = "flex";
+    birthdayVideo.currentTime = 0;
+    birthdayVideo.play().catch(e => console.log("Video play error:", e));
+  });
+
+  // Video click → close
+  videoModal.addEventListener("click", () => {
+    birthdayVideo.pause();
+    videoModal.style.display = "none";
+  });
+
+  // Confetti / Hearts / Balloons
+  const heartChars = ['💖','💗','💘','💕','💞','💝'];
+  const balloonChar = '🎈';
+  function createEffect(){
+    let piece = document.createElement('div');
+    if(Math.random() < 0.3){ 
+      piece.textContent = balloonChar;
+      piece.classList.add('balloon');
+      piece.style.left = Math.random() * 100 + "%";
+      piece.style.fontSize = (40 + Math.random() * 30) + "px";
+    } else {
+      piece.textContent = heartChars[Math.floor(Math.random() * heartChars.length)];
+      piece.classList.add('heart');
+      piece.style.left = Math.random() * 100 + "%";
+      piece.style.fontSize = (20 + Math.random() * 30) + "px";
+    }
+    confettiContainer.appendChild(piece);
+    setTimeout(() => {
+      piece.remove();
+    }, 10000);
+  }
+  setInterval(createEffect, 500);
+};
+
+// Video → Love Letter
+const loveLetterModal = document.getElementById("loveLetterModal");
+const openLetterBtn = document.getElementById("openLetterBtn");
+const letterElement = document.getElementById("letter");
+const signature = document.getElementById("signature");
+
+const loveText = `My Dearest Love 💕,
+
+Since the moment you walked into my life, everything became more beautiful. 
+Every heartbeat reminds me of you, and every day feels brighter with your love.
+
+No matter the distance, no matter the time, you are always in my heart. 
+You are my reason to smile, my dream, and my forever. 
+
+I love you endlessly...`;
+
+openLetterBtn.addEventListener("click", () => {
+  videoModal.style.display = "none";   // hide video
+  loveLetterModal.style.display = "flex"; // show letter
+  birthdayVideo.pause();
+
+  // typing effect
+  letterElement.textContent = "";
+  signature.style.display = "none";
+  let i = 0;
+  function typeWriter() {
+    if (i < loveText.length) {
+      letterElement.textContent += loveText.charAt(i);
+      i++;
+      setTimeout(typeWriter, 50);
+    } else {
+      signature.style.display = "block";
+    }
+  }
+  typeWriter();
+});
+const supersizePage = document.getElementById("supersizePage");
+  const knowBtn = document.getElementById("knowBtn");
+  const confirmDiv = document.getElementById("confirmDiv");
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const girlImage = document.getElementById("girlImage");
+  const finalMessage = document.getElementById("finalMessage");
+  const sadMessage = document.getElementById("sadMessage");
+
+  // Supersize button → open Supersize page
+  supersizeBtn.addEventListener("click", () => {
+    loveLetterModal.style.display = "none";
+    supersizePage.style.display = "flex";
+  });
+
+  // Step 1: Show confirm buttons
+  knowBtn.addEventListener("click", () => {
+    knowBtn.style.display = "none";
+    confirmDiv.classList.remove("hidden");
+  });
+
+  // Step 2: No clicked → show sad message
+  noBtn.addEventListener("click", () => {
+    confirmDiv.classList.add("hidden");
+    sadMessage.style.display = "block";
+
+    setTimeout(() => {
+      sadMessage.style.display = "none";
+      knowBtn.style.display = "inline-block";
+    }, 2500);
+  });
+
+  // Step 3: Yes clicked → show only girl image and message
+  yesBtn.addEventListener("click", () => {
+    confirmDiv.classList.add("hidden");
+    mainImage.style.display = "none";   // hide initial special.jpeg
+    girlImage.style.display = "block";  // show only girl image
+    finalMessage.style.display = "block";
+  });
+
+  const box1 = document.getElementById("box1");
+  const box2 = document.getElementById("box2");
+  const box3 = document.getElementById("box3");
+  const result = document.getElementById("result");
+  const gifContainer = document.getElementById("gifContainer");
+  const onceMoreBtn = document.getElementById("onceMoreBtn");
+
+  function checkValues() {
+    if (box1.value === "24" && box2.value === "7" && box3.value === "365") {
+      result.textContent = "I love you and Happy Birthday my life partner ❤️";
+      result.className = "correct";
+      result.style.display = "block";
+      gifContainer.style.display = "flex";
+      onceMoreBtn.style.display = "inline-block"; // show button
+    } else if (box1.value !== "" || box2.value !== "" || box3.value !== "") {
+      result.textContent = "Hi life partner kindly call my number I gave you the correct one";
+      result.className = "wrong";
+      result.style.display = "block";
+      gifContainer.style.display = "none";
+      onceMoreBtn.style.display = "inline-block"; // show button
+    } else {
+      result.style.display = "none";
+      gifContainer.style.display = "none";
+      onceMoreBtn.style.display = "none"; // hide button
+    }
+  }
+
+  [box1, box2, box3].forEach(input => {
+    input.addEventListener("input", checkValues);
+  });
+
+  onceMoreBtn.addEventListener("click", () => {
+    // Navigate to girl.html
+    window.location.href = "girl.html";
+  });
+
+</script>
+</body>
+</html>
+
