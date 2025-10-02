@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Another Supise ❤️</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #000;
+      color: #fff;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    input {
+      width: 100px;
+      padding: 10px;
+      margin: 10px;
+      border: 2px solid #ff3366;
+      border-radius: 10px;
+      font-size: 18px;
+      text-align: center;
+      background: #111;
+      color: #fff;
+    }
+    .symbol {
+      font-size: 26px;
+      font-weight: bold;
+      margin: 0 10px;
+      color: #ff3366;
+    }
+    #result {
+      margin-top: 40px;
+      font-size: 22px;
+      font-weight: bold;
+      display: none;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    #result.correct { color: #ff3366; }
+    #result.wrong { color: #ffcc00; }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .gif-container {
+      margin-top: 30px;
+      display: none; /* hidden by default */
+      justify-content: center;
+    }
+    .gif-box {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid #ff3366;
+      box-shadow: 0 0 20px #ff3366;
+    }
+    #onceMoreBtn {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: 2px solid #ff3366;
+      background: #111;
+      color: #fff;
+      cursor: pointer;
+      display: none; /* hide initially */
+    }
+  </style>
+</head>
+<body>
+  <h2>Enter the Magic Numbers ❤️</h2>
+  <div>
+    <input type="text" id="box1" maxlength="2" >
+    <span class="symbol">*</span>
+    <input type="text" id="box2" maxlength="1" >
+    <span class="symbol">*</span>
+    <input type="text" id="box3" maxlength="3">
+    <span class="symbol">=</span>
+  </div>
+
+  <div id="result"></div>
+
+  <!-- GIF Section -->
+  <div class="gif-container" id="gifContainer">
+    <div class="gif-box">
+      <div class="tenor-gif-embed" data-postid="10879878982515761105" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+        <a href="https://tenor.com/view/birth-day-happy-birth-day-happy-birthday-birthday-bday-gif-10879878982515761105">Birth Day Happy Birth Day GIF</a> 
+        from <a href="https://tenor.com/search/birth+day-gifs">Birth Day GIFs</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+  <script>
+    const box1 = document.getElementById("box1");
+    const box2 = document.getElementById("box2");
+    const box3 = document.getElementById("box3");
+    const result = document.getElementById("result");
+    const gifContainer = document.getElementById("gifContainer");
+    const onceMoreBtn = document.getElementById("onceMoreBtn");
+
+    function checkValues() {
+      if (box1.value === "24" && box2.value === "7" && box3.value === "365") {
+        result.textContent = "I love you and Happy Birthday my life partner ❤️";
+        result.className = "correct";
+        result.style.display = "block";
+        gifContainer.style.display = "flex";
+        onceMoreBtn.style.display = "inline-block"; // show button
+      } else if (box1.value !== "" || box2.value !== "" || box3.value !== "") {
+        result.textContent = "Hi life partner kindly call my number I gave you the correct one";
+        result.className = "wrong";
+        result.style.display = "block";
+        gifContainer.style.display = "none";
+        onceMoreBtn.style.display = "inline-block"; // show button
+      } else {
+        result.style.display = "none";
+        gifContainer.style.display = "none";
+        onceMoreBtn.style.display = "none"; // hide button
+      }
+    }
+
+    [box1, box2, box3].forEach(input => {
+      input.addEventListener("input", checkValues);
+    });
+
+    onceMoreBtn.addEventListener("click", () => {
+      box1.value = "";
+      box2.value = "";
+      box3.value = "";
+      result.style.display = "none";
+      gifContainer.style.display = "none";
+      onceMoreBtn.style.display = "none";
+      box1.focus();
+    });
+  </script>
+</body>
+</html>
